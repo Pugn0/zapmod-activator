@@ -282,7 +282,7 @@ do_activate() {
     fi
 
     show_success_box "ZAPMOD ATIVADO COM SUCESSO!"
-    echo -e "  ${GREEN}WaSpeed + ZapVoice ativos.${RESET}"
+    echo -e "  ${GREEN}Acesso PRO liberado.${RESET}"
     echo -e "  ${GREEN}Todas as rotas redirecionadas.${RESET}"
     echo ""
     echo -e "  ${BOLD}$(tput setab 4)$(tput setaf 7) MANTENHA ESTA JANELA ABERTA $(tput sgr0)"
@@ -309,6 +309,7 @@ do_stop_proxy() {
 # ── Desfazer ───────────────────────────────────────────────────────
 
 do_deactivate() {
+    local silent_mode="${1:-0}"
     show_banner
     echo -e "  ${YELLOW}[ CHROME WEB STORE  >>  RESTORE ENGINE v4.2 ]${RESET}"
     echo ""
@@ -348,10 +349,12 @@ do_deactivate() {
 
     show_success_box "ZAPMOD DESATIVADO COM SUCESSO!"
     echo -e "  ${YELLOW}Sistema restaurado ao estado original.${RESET}"
-    echo ""
-    echo -e "  ${GRAY}Suporte: ${WHITE}$WHATSAPP${RESET}"
-    echo ""
-    read -p "  Pressione ENTER para sair" < /dev/tty
+    if [ "$silent_mode" != "1" ]; then
+        echo ""
+        echo -e "  ${GRAY}Suporte: ${WHITE}$WHATSAPP${RESET}"
+        echo ""
+        read -p "  Pressione ENTER para sair" < /dev/tty
+    fi
 }
 
 # ── Menu ───────────────────────────────────────────────────────────
@@ -360,8 +363,8 @@ print_menu() {
     show_banner
     echo -e "  ${WHITE}Selecione uma opcao:${RESET}"
     echo ""
-    echo -e "  ${GREEN}[ 1 ]${RESET}  ATIVAR"
-    echo -e "        ${GRAY}Ativa WaSpeed + ZapVoice${RESET}"
+    echo -e "  ${GREEN}[ 1 ]${RESET}  LIBERAR ACESSO PRO"
+    echo -e "        ${GRAY}Restaura primeiro e depois libera o PRO${RESET}"
     echo ""
     echo -e "  ${YELLOW}[ 2 ]${RESET}  DESFAZER"
     echo -e "        ${GRAY}Remove todas as alteracoes do sistema${RESET}"
@@ -383,7 +386,7 @@ while true; do
     print_menu
     read MENU_CHOICE < /dev/tty
     case "$MENU_CHOICE" in
-        1) do_activate   ;;
+        1) do_deactivate 1; do_activate ;;
         2) do_deactivate ;;
         0) clear; exit 0 ;;
         *) echo -e "\n  ${RED}Opcao invalida.${RESET}"; sleep 1 ;;

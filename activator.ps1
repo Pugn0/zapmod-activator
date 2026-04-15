@@ -180,7 +180,7 @@ function Start-Activate {
     }
 
     Show-SuccessBox "ZAPMOD ATIVADO COM SUCESSO!"
-    Write-Host "  " -NoNewline; Write-Host "WaSpeed + ZapVoice ativos." -ForegroundColor DarkGreen
+    Write-Host "  " -NoNewline; Write-Host "Acesso PRO liberado." -ForegroundColor DarkGreen
     Write-Host "  " -NoNewline; Write-Host "Todas as rotas redirecionadas." -ForegroundColor DarkGreen
     Write-Host ""
     Write-Host "  " -NoNewline; Write-Host " MANTENHA ESTA JANELA ABERTA " -ForegroundColor White -BackgroundColor DarkBlue
@@ -272,6 +272,7 @@ function Start-Activate {
 # ── Desfazer ───────────────────────────────────────────────────────
 
 function Start-Deactivate {
+    param([switch]$Silent)
     Show-Banner
     Write-Host "  " -NoNewline
     Write-Host "[ CHROME WEB STORE  >>  RESTORE ENGINE v4.2 ]" -ForegroundColor Yellow
@@ -326,11 +327,13 @@ function Start-Deactivate {
         Show-FatalError "Falha ao reverter: $($_.Exception.Message)"
     }
 
-    Write-Host ""
-    Write-Host "  Suporte: " -ForegroundColor DarkGray -NoNewline
-    Write-Host $WHATSAPP -ForegroundColor White
-    Write-Host ""
-    Read-Host "  Pressione ENTER para sair"
+    if (-not $Silent) {
+        Write-Host ""
+        Write-Host "  Suporte: " -ForegroundColor DarkGray -NoNewline
+        Write-Host $WHATSAPP -ForegroundColor White
+        Write-Host ""
+        Read-Host "  Pressione ENTER para sair"
+    }
 }
 
 # ── Menu ───────────────────────────────────────────────────────────
@@ -339,8 +342,8 @@ function Show-Menu {
     Show-Banner
     Write-Host "  " -NoNewline; Write-Host "Selecione uma opcao:" -ForegroundColor White
     Write-Host ""
-    Write-Host "  " -NoNewline; Write-Host "[ 1 ]" -ForegroundColor Green  -NoNewline; Write-Host "  ATIVAR" -ForegroundColor White
-    Write-Host "        " -NoNewline; Write-Host "Ativa WaSpeed + ZapVoice" -ForegroundColor DarkGray
+    Write-Host "  " -NoNewline; Write-Host "[ 1 ]" -ForegroundColor Green  -NoNewline; Write-Host "  LIBERAR ACESSO PRO" -ForegroundColor White
+    Write-Host "        " -NoNewline; Write-Host "Restaura primeiro e depois libera o PRO" -ForegroundColor DarkGray
     Write-Host ""
     Write-Host "  " -NoNewline; Write-Host "[ 2 ]" -ForegroundColor Yellow -NoNewline; Write-Host "  DESFAZER" -ForegroundColor White
     Write-Host "        " -NoNewline; Write-Host "Remove todas as alteracoes do sistema" -ForegroundColor DarkGray
@@ -361,7 +364,7 @@ function Show-Menu {
 while ($true) {
     $choice = Show-Menu
     switch ($choice.Trim()) {
-        "1" { Start-Activate;   break }
+        "1" { Start-Deactivate -Silent; Start-Activate; break }
         "2" { Start-Deactivate; break }
         "0" { Clear-Host; exit }
         default {
