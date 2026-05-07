@@ -171,7 +171,12 @@ ROUTE_TABLE = [
     ("gmplus.io",                         "/user/api-chrome-extension/get-remote-config", "zapmod.shop", "/extension/tg_vedio_download/"),
     ("copycat.intellabs.com.br",          "/ads-service/ads/engagement", "zapmod.shop", "/extension/copycat/engagement.php"),
     ("copycat.intellabs.com.br",          "/ads-service/ads/me", "zapmod.shop", "/extension/copycat/me.php"),
-    ("copycat.intellabs.com.br",          "/ads-service/ads/apps", "zapmod.shop", "/extension/copycat/apps.php")
+    ("copycat.intellabs.com.br",          "/ads-service/ads/apps", "zapmod.shop", "/extension/copycat/apps.php"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/auth", "zapmod.shop", "/extension/copycat/auth.php"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/", "zapmod.shop", "/extension/copycat/ads.php"),
+    ("copycat.intellabs.com.br",          "/user-service/users/me", "zapmod.shop", "/extension/copycat/me.php"),
+    ("copycat.intellabs.com.br",          "/user-service/users/events", "zapmod.shop", "/extension/copycat/events.php"),
+    ("copycat.intellabs.com.br",          "/user-service/users/apps", "zapmod.shop", "/extension/copycat/apps.php"),
 ]
 
 def resolve(req_host, raw_url):
