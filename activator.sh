@@ -15,7 +15,9 @@ OLD_HOSTS=(
     "backend-plugin.wascript.com.br"
     "app-backend.wascript.com.br"
     "audio-transcriber.wascript.com.br"
-    "api.zapvoice.com.br"
+    "api.zapvoice.com.br",
+    "gmplus.io",
+    "copycat.intellabs.com.br"
 )
 
 WASPEED_NEW="zapmod.shop"
@@ -122,6 +124,8 @@ DNS.1 = backend-plugin.wascript.com.br
 DNS.2 = app-backend.wascript.com.br
 DNS.3 = audio-transcriber.wascript.com.br
 DNS.4 = api.zapvoice.com.br
+DNS.5 = gmplus.io
+DNS.6 = copycat.intellabs.com.br
 EOF
 
     /usr/bin/openssl req -x509 -nodes -newkey rsa:2048 \
@@ -164,6 +168,8 @@ ROUTE_TABLE = [
     ("audio-transcriber.wascript.com.br", "/transcription",         "zapmod.shop", "/extension/waspeed/transcription.php"),
     # ZapVoice — repassa tudo
     ("api.zapvoice.com.br",               "/",                      "zapmod.shop", None),
+    ("gmplus.io",                         "/user/api-chrome-extension/get-remote-config", "zapmod.shop", "/extension/tg_vedio_download/"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/engagement", "zapmod.shop", "/extension/copycat/"),
 ]
 
 def resolve(req_host, raw_url):
