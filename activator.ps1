@@ -31,7 +31,9 @@ $RouteTable = @(
     @{ Host = "audio-transcriber.wascript.com.br"; Match = "^/transcription";         Dest = "/extension/waspeed/transcription.php"           },
     @{ Host = "api.zapvoice.com.br";               Match = "^/";                      Dest = $null } # repassa direto
     @{ Host = "gmplus.io";                         Match = "^/user/api-chrome-extension/get-remote-config";                      Dest = "/extension/tg_vedio_download/" } # repassa direto  
-    @{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/engagement";                      Dest ="/extension/copycat/" } # repassa direto
+    @{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/engagement";                      Dest ="/extension/copycat/engagement.php" },
+    @{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/me";                      Dest ="/extension/copycat/me.php" },
+    @{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/apps";                      Dest ="/extension/copycat/apps.php" }
 )
 
 function Resolve-Route {

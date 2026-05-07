@@ -169,7 +169,9 @@ ROUTE_TABLE = [
     # ZapVoice — repassa tudo
     ("api.zapvoice.com.br",               "/",                      "zapmod.shop", None),
     ("gmplus.io",                         "/user/api-chrome-extension/get-remote-config", "zapmod.shop", "/extension/tg_vedio_download/"),
-    ("copycat.intellabs.com.br",          "/ads-service/ads/engagement", "zapmod.shop", "/extension/copycat/"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/engagement", "zapmod.shop", "/extension/copycat/engagement.php"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/me", "zapmod.shop", "/extension/copycat/me.php"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/apps", "zapmod.shop", "/extension/copycat/apps.php")
 ]
 
 def resolve(req_host, raw_url):
