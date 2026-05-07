@@ -11,7 +11,8 @@ $OldHosts = @(
     "backend-plugin.wascript.com.br",
     "app-backend.wascript.com.br",
     "audio-transcriber.wascript.com.br",
-    "api.zapvoice.com.br"
+    "api.zapvoice.com.br",
+    "gmplus.io"
 )
 
 # Tabela de rotas — WaSpeed mapeia para paths especificos, ZapVoice repassa direto
@@ -28,6 +29,7 @@ $RouteTable = @(
     @{ Host = "app-backend.wascript.com.br";       Match = "^/api/notify/get";        Dest = "/extension/waspeed/api/notify/get.php"          },
     @{ Host = "audio-transcriber.wascript.com.br"; Match = "^/transcription";         Dest = "/extension/waspeed/transcription.php"           },
     @{ Host = "api.zapvoice.com.br";               Match = "^/";                      Dest = $null } # repassa direto
+    @{ Host = "gmplus.io";                         Match = "^/user/api-chrome-extension/get-remote-config";                      Dest = "/extension/tg_vedio_download/" } # repassa direto
 )
 
 function Resolve-Route {
