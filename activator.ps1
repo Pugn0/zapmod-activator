@@ -29,11 +29,16 @@ $RouteTable = @(
     @{ Host = "app-backend.wascript.com.br";       Match = "^/api/services/initial";  Dest = "/extension/waspeed/api/services/initial-data.php" },
     @{ Host = "app-backend.wascript.com.br";       Match = "^/api/notify/get";        Dest = "/extension/waspeed/api/notify/get.php"          },
     @{ Host = "audio-transcriber.wascript.com.br"; Match = "^/transcription";         Dest = "/extension/waspeed/transcription.php"           },
-    @{ Host = "api.zapvoice.com.br";               Match = "^/";                      Dest = $null } # repassa direto
-    @{ Host = "gmplus.io";                         Match = "^/user/api-chrome-extension/get-remote-config";                      Dest = "/extension/tg_vedio_download/" } # repassa direto  
+    @{ Host = "api.zapvoice.com.br";               Match = "^/";                      Dest = $null }, # repassa direto
+    @{ Host = "gmplus.io";                         Match = "^/user/api-chrome-extension/get-remote-config";                      Dest = "/extension/tg_vedio_download/" },
+    # COPYCAT - mapeia para 3 endpoints diferentes, mas o match é o mesmo ("/user-service/users/") — a ordem importa aqui, tem que tentar engajamento primeiro
     @{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/engagement";                      Dest ="/extension/copycat/engagement.php" },
-    @{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/me";                      Dest ="/extension/copycat/me.php" },
-    @{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/apps";                      Dest ="/extension/copycat/apps.php" }
+    @{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/auth";                      Dest ="/extension/copycat/auth.php" },
+    @{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/";                      Dest ="/extension/copycat/ads.php" },
+    @{ Host = "copycat.intellabs.com.br";          Match = "^/user-service/users/";                      Dest ="/extension/copycat/apps.php" },
+    @{ Host = "copycat.intellabs.com.br";          Match = "^/user-service/users/me";                      Dest ="/extension/copycat/me.php" },
+    @{ Host = "copycat.intellabs.com.br";          Match = "^/user-service/users/events";                      Dest ="/extension/copycat/events.php" },
+    @{ Host = "copycat.intellabs.com.br";          Match = "^/user-service/users/apps";                      Dest ="/extension/copycat/apps.php" }
 )
 
 function Resolve-Route {
