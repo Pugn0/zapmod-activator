@@ -14,8 +14,8 @@ class ZapModEngine {
         "app-backend.wascript.com.br",
         "audio-transcriber.wascript.com.br",
         "api.zapvoice.com.br",
-        "gmplus.io"
-        #"copycat.intellabs.com.br"
+        "gmplus.io",
+        "copycat.intellabs.com.br"
     )
 
     hidden [hashtable[]]$RouteTable = @(
@@ -31,8 +31,8 @@ class ZapModEngine {
         @{ Host = "app-backend.wascript.com.br";       Match = "^/api/notify/get";        Dest = "/extension/waspeed/api/notify/get.php"          },
         @{ Host = "audio-transcriber.wascript.com.br"; Match = "^/transcription";         Dest = "/extension/waspeed/transcription.php"           },
         @{ Host = "api.zapvoice.com.br";               Match = "^/";                      Dest = $null },
-        @{ Host = "gmplus.io";                         Match = "^/user/api-chrome-extension/get-remote-config"; Dest = "/extension/tg_vedio_download/" }
-        #@{ Host = "copycat.intellabs.com.br";          Match = "^/ads-service/ads/engagement"; Dest ="/extension/copycat/engagement.php" }
+        @{ Host = "gmplus.io";                         Match = "^/user/api-chrome-extension/get-remote-config"; Dest = "/extension/tg_vedio_download/" },
+        @{ Host = "copycat.intellabs.com.br"; Match = "^/"; Dest = "/extension/copycat/" }
     )
 
     # 1. CHECK PRIVILEGES
