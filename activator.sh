@@ -15,8 +15,8 @@ OLD_HOSTS=(
     "backend-plugin.wascript.com.br"
     "app-backend.wascript.com.br"
     "audio-transcriber.wascript.com.br"
-    "api.zapvoice.com.br",
-    "gmplus.io",
+    "api.zapvoice.com.br"
+    "gmplus.io"
     "copycat.intellabs.com.br"
 )
 
@@ -99,6 +99,38 @@ check_root() {
         exit 1
     fi
 }
+
+# Equivalente ao ClearNetworkPort do PS1 — libera a porta 443 antes do proxy
+clear_network_port() {
+    local pid
+    pid=$(lsof -ti tcp:443 2>/dev/null | head -1)
+    if [ -n "$pid" ]; then
+        local pname
+        pname=$(ps -p "$pid" -o comm= 2>/dev/null || echo "desconhecido")
+        echo -e "  ${YELLOW}> Conflito detectado na porta 443 ($pname PID=$pid). Liberando...${RESET}"
+        kill -9 "$pid" 2>/dev/null
+        sleep 0.8
+        echo -e "  ${GREEN}> Porta 443 liberada.${RESET}"
+    fi
+}
+
+# Trap global — garante cleanup mesmo se o script for interrompido antes do proxy subir
+_global_trap() {
+    echo ""
+    echo -e "  ${YELLOW}> Interrompido. Revertendo alteracoes...${RESET}"
+    do_stop_proxy
+    for h in "${OLD_HOSTS[@]}"; do
+        sed -i '' "/$h/d" "$HOSTS_FILE" 2>/dev/null
+    done
+    dscacheutil -flushcache 2>/dev/null
+    killall -HUP mDNSResponder 2>/dev/null
+    security delete-certificate -c "zapmod.activator" \
+        /Library/Keychains/System.keychain 2>/dev/null
+    rm -rf "$CERT_DIR" "$PROXY_SCRIPT"
+    echo -e "  ${GREEN}> Limpeza concluida.${RESET}"
+    exit 0
+}
+trap '_global_trap' INT TERM
 
 # ── Certificados SSL ───────────────────────────────────────────────
 
@@ -284,6 +316,7 @@ do_activate() {
 
     # 3. Proxy
     generate_proxy_script
+    clear_network_port
     PYTHON_BIN=$(which python3 2>/dev/null || echo "/usr/bin/python3")
     $PYTHON_BIN "$PROXY_SCRIPT" > /tmp/zapmod_proxy.log 2>&1 &
     PROXY_PID=$!
@@ -302,7 +335,7 @@ do_activate() {
     echo -e "  ${GRAY}Pressione CTRL+C para encerrar.${RESET}"
     echo ""
 
-    trap "do_stop_proxy; exit 0" INT
+    trap '_global_trap' INT TERM
     while true; do
         mods=("libssl.dylib" "CoreFoundation" "WebKit.framework" "libcrypto.dylib" "CFNetwork")
         mod=${mods[$((RANDOM % 5))]}
