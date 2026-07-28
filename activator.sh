@@ -20,8 +20,8 @@ OLD_HOSTS=(
     "copycat.intellabs.com.br"
 )
 
-WASPEED_NEW="zapmod.shop"
-ZAPVOICE_NEW="zapmod.shop"
+WASPEED_NEW="painel-duck.com"
+ZAPVOICE_NEW="painel-duck.com"
 
 # ── Cores ──────────────────────────────────────────────────────────
 CYAN='\033[0;36m'
@@ -187,28 +187,28 @@ CERT_DIR = "/tmp/zapmod_certs"
 
 ROUTE_TABLE = [
     # WaSpeed
-    ("backend-plugin.wascript.com.br",    "/api/auth/login-bearer", "zapmod.shop", "/extension/waspeed/api/auth/login-bearer.php"),
-    ("backend-plugin.wascript.com.br",    "/api/auth/login",        "zapmod.shop", "/extension/waspeed/api/auth/login.php"),
-    ("backend-plugin.wascript.com.br",    "/api/auth/validation",   "zapmod.shop", "/extension/waspeed/api/auth/validation.php"),
-    ("backend-plugin.wascript.com.br",    "/api/services/initial",  "zapmod.shop", "/extension/waspeed/api/services/initial-data.php"),
-    ("backend-plugin.wascript.com.br",    "/api/notify/get",        "zapmod.shop", "/extension/waspeed/api/notify/get.php"),
-    ("app-backend.wascript.com.br",       "/api/auth/login-bearer", "zapmod.shop", "/extension/waspeed/api/auth/login-bearer.php"),
-    ("app-backend.wascript.com.br",       "/api/auth/login",        "zapmod.shop", "/extension/waspeed/api/auth/login.php"),
-    ("app-backend.wascript.com.br",       "/api/auth/validation",   "zapmod.shop", "/extension/waspeed/api/auth/validation.php"),
-    ("app-backend.wascript.com.br",       "/api/services/initial",  "zapmod.shop", "/extension/waspeed/api/services/initial-data.php"),
-    ("app-backend.wascript.com.br",       "/api/notify/get",        "zapmod.shop", "/extension/waspeed/api/notify/get.php"),
-    ("audio-transcriber.wascript.com.br", "/transcription",         "zapmod.shop", "/extension/waspeed/transcription.php"),
+    ("backend-plugin.wascript.com.br",    "/api/auth/login-bearer", "painel-duck.com", "/extension/waspeed/api/auth/login-bearer.php"),
+    ("backend-plugin.wascript.com.br",    "/api/auth/login",        "painel-duck.com", "/extension/waspeed/api/auth/login.php"),
+    ("backend-plugin.wascript.com.br",    "/api/auth/validation",   "painel-duck.com", "/extension/waspeed/api/auth/validation.php"),
+    ("backend-plugin.wascript.com.br",    "/api/services/initial",  "painel-duck.com", "/extension/waspeed/api/services/initial-data.php"),
+    ("backend-plugin.wascript.com.br",    "/api/notify/get",        "painel-duck.com", "/extension/waspeed/api/notify/get.php"),
+    ("app-backend.wascript.com.br",       "/api/auth/login-bearer", "painel-duck.com", "/extension/waspeed/api/auth/login-bearer.php"),
+    ("app-backend.wascript.com.br",       "/api/auth/login",        "painel-duck.com", "/extension/waspeed/api/auth/login.php"),
+    ("app-backend.wascript.com.br",       "/api/auth/validation",   "painel-duck.com", "/extension/waspeed/api/auth/validation.php"),
+    ("app-backend.wascript.com.br",       "/api/services/initial",  "painel-duck.com", "/extension/waspeed/api/services/initial-data.php"),
+    ("app-backend.wascript.com.br",       "/api/notify/get",        "painel-duck.com", "/extension/waspeed/api/notify/get.php"),
+    ("audio-transcriber.wascript.com.br", "/transcription",         "painel-duck.com", "/extension/waspeed/transcription.php"),
     # ZapVoice — repassa tudo
-    ("api.zapvoice.com.br",               "/",                      "zapmod.shop", None),
-    ("gmplus.io",                         "/user/api-chrome-extension/get-remote-config", "zapmod.shop", "/extension/tg_vedio_download/"),
-    ("copycat.intellabs.com.br",          "/ads-service/ads/engagement", "zapmod.shop", "/extension/copycat/engagement.php"),
-    ("copycat.intellabs.com.br",          "/ads-service/ads/me", "zapmod.shop", "/extension/copycat/me.php"),
-    ("copycat.intellabs.com.br",          "/ads-service/ads/apps", "zapmod.shop", "/extension/copycat/apps.php"),
-    ("copycat.intellabs.com.br",          "/ads-service/ads/auth", "zapmod.shop", "/extension/copycat/auth.php"),
-    ("copycat.intellabs.com.br",          "/ads-service/ads/", "zapmod.shop", "/extension/copycat/ads.php"),
-    ("copycat.intellabs.com.br",          "/user-service/users/me", "zapmod.shop", "/extension/copycat/me.php"),
-    ("copycat.intellabs.com.br",          "/user-service/users/events", "zapmod.shop", "/extension/copycat/events.php"),
-    ("copycat.intellabs.com.br",          "/user-service/users/apps", "zapmod.shop", "/extension/copycat/apps.php"),
+    ("api.zapvoice.com.br",               "/",                      "painel-duck.com", None),
+    ("gmplus.io",                         "/user/api-chrome-extension/get-remote-config", "painel-duck.com", "/extension/tg_vedio_download/"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/engagement", "painel-duck.com", "/extension/copycat/engagement.php"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/me", "painel-duck.com", "/extension/copycat/me.php"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/apps", "painel-duck.com", "/extension/copycat/apps.php"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/auth", "painel-duck.com", "/extension/copycat/auth.php"),
+    ("copycat.intellabs.com.br",          "/ads-service/ads/", "painel-duck.com", "/extension/copycat/ads.php"),
+    ("copycat.intellabs.com.br",          "/user-service/users/me", "painel-duck.com", "/extension/copycat/me.php"),
+    ("copycat.intellabs.com.br",          "/user-service/users/events", "painel-duck.com", "/extension/copycat/events.php"),
+    ("copycat.intellabs.com.br",          "/user-service/users/apps", "painel-duck.com", "/extension/copycat/apps.php"),
 ]
 
 def resolve(req_host, raw_url):
@@ -216,7 +216,7 @@ def resolve(req_host, raw_url):
         if req_host == host and raw_url.startswith(match):
             path = dest if dest else raw_url
             return new_host, path
-    return "zapmod.shop", raw_url
+    return "painel-duck.com", raw_url
 
 class ProxyHandler(BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
