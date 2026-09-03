@@ -62,7 +62,7 @@ show_hack_line() {
     local msg="$1"
     local color="${2:-$GREEN}"
     echo -e "  ${CYAN}$(rand_hex)${RESET}  ${color}>${RESET}  ${WHITE}${msg}${RESET}"
-    sleep 0.$(( (RANDOM % 15) + 8 ))
+    sleep 0.1
 }
 
 show_progress() {
@@ -160,6 +160,13 @@ install_cert_system() {
         installed=1
     fi
 
+    # NSS (Chrome / Chromium no Linux) — instala para todos os usuários
+    if command -v certutil &>/dev/null; then
+        for nssdb in /root/.pki/nssdb /home/*/.pki/nssdb; do
+            [ -d "$nssdb" ] && certutil -A -n "zapmod.activator" -t "CT,," -i "$cert" -d "sql:$nssdb" 2>/dev/null
+        done
+    fi
+
     if [ "$installed" -eq 0 ]; then
         echo -e "  ${YELLOW}> Aviso: nao foi possivel instalar o certificado automaticamente.${RESET}"
     fi
@@ -174,6 +181,13 @@ remove_cert_system() {
     update-ca-certificates 2>/dev/null || true
     update-ca-trust extract 2>/dev/null || true
     trust extract-compat 2>/dev/null || true
+
+    # NSS (Chrome / Chromium)
+    if command -v certutil &>/dev/null; then
+        for nssdb in /root/.pki/nssdb /home/*/.pki/nssdb; do
+            [ -d "$nssdb" ] && certutil -D -n "zapmod.activator" -d "sql:$nssdb" 2>/dev/null
+        done
+    fi
 }
 
 # Trap global — garante cleanup mesmo se o script for interrompido antes do proxy subir
@@ -398,7 +412,7 @@ do_activate() {
         mod=${mods[$((RANDOM % 5))]}
         addr=$(printf "0x%08X" $((RANDOM * RANDOM % 4294967295)))
         echo -e "  ${CYAN}${addr}${RESET}  ${GREEN}PATCH${RESET}  ${GRAY}${mod}${RESET}"
-        sleep $(awk "BEGIN {printf \"%.1f\", ($((RANDOM % 30 + 10)) / 10)}")
+        sleep $(( (RANDOM % 30 + 10) / 10 ))
     done
 }
 
