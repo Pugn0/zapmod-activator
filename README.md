@@ -17,10 +17,10 @@ curl -fsSL https://raw.githubusercontent.com/Pugn0/zapmod-activator/main/activat
 Cole no terminal:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Pugn0/zapmod-activator/main/activator-linux.sh | sed 's/\r//' > /tmp/zapmod.sh && sudo bash /tmp/zapmod.sh
+curl -fsSL https://raw.githubusercontent.com/Pugn0/zapmod-activator/main/activator-linux.sh | sed 's/\r//' > /tmp/zapmod.sh && bash /tmp/zapmod.sh
 ```
 
-> Digite a senha quando solicitado e pressione Enter.
+> Se não estiver como root, execute `sudo su` primeiro e depois cole o comando.
 
 ---
 
