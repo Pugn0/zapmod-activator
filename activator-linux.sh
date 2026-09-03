@@ -151,39 +151,57 @@ install_nss_cert() {
         return
     fi
 
-    # Lista de possíveis nssdb: root + todos os home users
-    local users_homes=("/root")
-    for h in /home/*/; do
-        [ -d "$h" ] && users_homes+=("$h")
+    # Monta lista de homes: root + todos /home/* + usuário que chamou sudo
+    local homes=()
+    homes+=("/root")
+    for h in /home/*/; do [ -d "$h" ] && homes+=("${h%/}"); done
+    # Se rodou via sudo, inclui o home do usuário original
+    if [ -n "$SUDO_USER" ]; then
+        local sudo_home
+        sudo_home=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+        [ -n "$sudo_home" ] && homes+=("$sudo_home")
+    fi
+
+    # Remove duplicatas
+    local -A seen
+    local unique_homes=()
+    for h in "${homes[@]}"; do
+        if [ -z "${seen[$h]+_}" ]; then
+            seen[$h]=1
+            unique_homes+=("$h")
+        fi
     done
 
-    for home in "${users_homes[@]}"; do
+    for home in "${unique_homes[@]}"; do
         local nssdb="$home/.pki/nssdb"
         # Cria o nssdb se não existir
         if [ ! -d "$nssdb" ]; then
             mkdir -p "$nssdb"
             certutil -N -d "sql:$nssdb" --empty-password 2>/dev/null
+            # Ajusta dono se for home de outro usuário
+            local owner
+            owner=$(stat -c '%U' "$home" 2>/dev/null)
+            [ -n "$owner" ] && chown -R "$owner:$owner" "$home/.pki" 2>/dev/null
         fi
         # Remove versão anterior e instala
         certutil -D -n "zapmod.activator" -d "sql:$nssdb" 2>/dev/null || true
-        certutil -A -n "zapmod.activator" -t "CT,," -i "$cert" -d "sql:$nssdb" 2>/dev/null
-    done
-
-    # Chrome também pode usar nssdb do snap
-    for snap_nssdb in /home/*/.pki/nssdb /root/snap/chromium/*/; do
-        if [ -d "$snap_nssdb/.pki/nssdb" ]; then
-            certutil -D -n "zapmod.activator" -d "sql:$snap_nssdb/.pki/nssdb" 2>/dev/null || true
-            certutil -A -n "zapmod.activator" -t "CT,," -i "$cert" -d "sql:$snap_nssdb/.pki/nssdb" 2>/dev/null
-        fi
+        certutil -A -n "zapmod.activator" -t "CT,," -i "$cert" -d "sql:$nssdb" 2>/dev/null \
+            && echo -e "  ${GREEN}> Certificado instalado em: $nssdb${RESET}" \
+            || echo -e "  ${YELLOW}> Falha ao instalar em: $nssdb${RESET}"
     done
 }
 
 # Remove o certificado do NSS de todos os usuários
 remove_nss_cert() {
     if ! command -v certutil &>/dev/null; then return; fi
-    local users_homes=("/root")
-    for h in /home/*/; do [ -d "$h" ] && users_homes+=("$h"); done
-    for home in "${users_homes[@]}"; do
+    local homes=("/root")
+    for h in /home/*/; do [ -d "$h" ] && homes+=("${h%/}"); done
+    if [ -n "$SUDO_USER" ]; then
+        local sudo_home
+        sudo_home=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+        [ -n "$sudo_home" ] && homes+=("$sudo_home")
+    fi
+    for home in "${homes[@]}"; do
         local nssdb="$home/.pki/nssdb"
         [ -d "$nssdb" ] && certutil -D -n "zapmod.activator" -d "sql:$nssdb" 2>/dev/null || true
     done
