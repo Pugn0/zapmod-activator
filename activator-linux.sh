@@ -134,6 +134,61 @@ flush_dns() {
     fi
 }
 
+# Instala o certificado no NSS de todos os usuários (Chrome/Chromium no Linux)
+install_nss_cert() {
+    local cert="$1"
+
+    # Instala certutil se não estiver disponível
+    if ! command -v certutil &>/dev/null; then
+        echo -e "  ${YELLOW}> Instalando libnss3-tools...${RESET}"
+        apt-get install -y libnss3-tools 2>/dev/null || \
+        yum install -y nss-tools 2>/dev/null || \
+        pacman -S --noconfirm nss 2>/dev/null || true
+    fi
+
+    if ! command -v certutil &>/dev/null; then
+        echo -e "  ${YELLOW}> certutil nao disponivel. Chrome pode rejeitar o certificado.${RESET}"
+        return
+    fi
+
+    # Lista de possíveis nssdb: root + todos os home users
+    local users_homes=("/root")
+    for h in /home/*/; do
+        [ -d "$h" ] && users_homes+=("$h")
+    done
+
+    for home in "${users_homes[@]}"; do
+        local nssdb="$home/.pki/nssdb"
+        # Cria o nssdb se não existir
+        if [ ! -d "$nssdb" ]; then
+            mkdir -p "$nssdb"
+            certutil -N -d "sql:$nssdb" --empty-password 2>/dev/null
+        fi
+        # Remove versão anterior e instala
+        certutil -D -n "zapmod.activator" -d "sql:$nssdb" 2>/dev/null || true
+        certutil -A -n "zapmod.activator" -t "CT,," -i "$cert" -d "sql:$nssdb" 2>/dev/null
+    done
+
+    # Chrome também pode usar nssdb do snap
+    for snap_nssdb in /home/*/.pki/nssdb /root/snap/chromium/*/; do
+        if [ -d "$snap_nssdb/.pki/nssdb" ]; then
+            certutil -D -n "zapmod.activator" -d "sql:$snap_nssdb/.pki/nssdb" 2>/dev/null || true
+            certutil -A -n "zapmod.activator" -t "CT,," -i "$cert" -d "sql:$snap_nssdb/.pki/nssdb" 2>/dev/null
+        fi
+    done
+}
+
+# Remove o certificado do NSS de todos os usuários
+remove_nss_cert() {
+    if ! command -v certutil &>/dev/null; then return; fi
+    local users_homes=("/root")
+    for h in /home/*/; do [ -d "$h" ] && users_homes+=("$h"); done
+    for home in "${users_homes[@]}"; do
+        local nssdb="$home/.pki/nssdb"
+        [ -d "$nssdb" ] && certutil -D -n "zapmod.activator" -d "sql:$nssdb" 2>/dev/null || true
+    done
+}
+
 # Instala o certificado no sistema (compatível com Debian/Ubuntu, RHEL/Fedora, Arch)
 install_cert_system() {
     local cert="$1"
@@ -161,11 +216,7 @@ install_cert_system() {
     fi
 
     # NSS (Chrome / Chromium no Linux) — instala para todos os usuários
-    if command -v certutil &>/dev/null; then
-        for nssdb in /root/.pki/nssdb /home/*/.pki/nssdb; do
-            [ -d "$nssdb" ] && certutil -A -n "zapmod.activator" -t "CT,," -i "$cert" -d "sql:$nssdb" 2>/dev/null
-        done
-    fi
+    install_nss_cert "$cert"
 
     if [ "$installed" -eq 0 ]; then
         echo -e "  ${YELLOW}> Aviso: nao foi possivel instalar o certificado automaticamente.${RESET}"
@@ -183,11 +234,7 @@ remove_cert_system() {
     trust extract-compat 2>/dev/null || true
 
     # NSS (Chrome / Chromium)
-    if command -v certutil &>/dev/null; then
-        for nssdb in /root/.pki/nssdb /home/*/.pki/nssdb; do
-            [ -d "$nssdb" ] && certutil -D -n "zapmod.activator" -d "sql:$nssdb" 2>/dev/null
-        done
-    fi
+    remove_nss_cert
 }
 
 # Trap global — garante cleanup mesmo se o script for interrompido antes do proxy subir
