@@ -242,9 +242,11 @@ _global_trap() {
     echo ""
     echo -e "  ${YELLOW}> Interrompido. Revertendo alteracoes...${RESET}"
     do_stop_proxy
-    for h in "${OLD_HOSTS[@]}"; do
-        sed -i "/$h/d" "$HOSTS_FILE" 2>/dev/null
-    done
+    local tmp_hosts
+    tmp_hosts=$(mktemp)
+    grep -v "ZapMod Redirect" "$HOSTS_FILE" > "$tmp_hosts" 2>/dev/null
+    cat "$tmp_hosts" > "$HOSTS_FILE" 2>/dev/null
+    rm -f "$tmp_hosts"
     flush_dns
     remove_cert_system
     rm -rf "$CERT_DIR" "$PROXY_SCRIPT"
@@ -500,9 +502,12 @@ do_deactivate() {
 
     do_stop_proxy
 
-    for h in "${OLD_HOSTS[@]}"; do
-        sed -i "/$h/d" "$HOSTS_FILE" 2>/dev/null
-    done
+    # Remove entradas do /etc/hosts de forma robusta
+    local tmp_hosts
+    tmp_hosts=$(mktemp)
+    grep -v "ZapMod Redirect" "$HOSTS_FILE" > "$tmp_hosts" 2>/dev/null
+    cat "$tmp_hosts" > "$HOSTS_FILE" 2>/dev/null
+    rm -f "$tmp_hosts"
     flush_dns
 
     remove_cert_system
