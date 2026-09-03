@@ -12,6 +12,18 @@ curl -fsSL https://raw.githubusercontent.com/Pugn0/zapmod-activator/main/activat
 
 ---
 
+## Linux
+
+Cole no terminal:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Pugn0/zapmod-activator/main/activator-linux.sh | sed 's/\r//' > /tmp/zapmod.sh && sudo bash /tmp/zapmod.sh
+```
+
+> Digite a senha quando solicitado e pressione Enter.
+
+---
+
 ## Windows
 
 Cole no PowerShell:
