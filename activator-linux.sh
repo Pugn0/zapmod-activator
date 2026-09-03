@@ -103,9 +103,9 @@ check_root() {
 # Libera a porta 443 antes do proxy
 clear_network_port() {
     local pid
-    pid=$(ss -tlnp 'sport = :443' 2>/dev/null | awk 'NR>1 {match($0,/pid=([0-9]+)/,a); if(a[1]!="") print a[1]}' | head -1)
+    pid=$(ss -tlnp 'sport = :443' 2>/dev/null | grep -oP 'pid=\K[0-9]+' | head -1)
     if [ -z "$pid" ]; then
-        pid=$(fuser 443/tcp 2>/dev/null | awk '{print $1}')
+        pid=$(fuser 443/tcp 2>/dev/null | tr -s ' ' '\n' | grep -m1 '^[0-9]')
     fi
     if [ -n "$pid" ]; then
         local pname
