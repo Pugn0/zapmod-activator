@@ -267,6 +267,7 @@ _global_trap() {
     rm -f "$tmp_hosts"
     flush_dns
     remove_cert_system
+    cleanup_chrome_wrapper
     rm -rf "$CERT_DIR" "$PROXY_SCRIPT"
     echo -e "  ${GREEN}> Limpeza concluida.${RESET}"
     exit 0
@@ -411,6 +412,53 @@ srv.serve_forever()
 PYEOF
 }
 
+# ── Chrome wrapper (ignora erro de certificado enquanto proxy está ativo) ──────
+
+CHROME_WRAPPER="/usr/local/bin/google-chrome"
+CHROME_WRAPPER_BACKUP="/usr/local/bin/google-chrome.zapmod-bak"
+CHROMIUM_WRAPPER="/usr/local/bin/chromium-browser"
+CHROMIUM_WRAPPER_BACKUP="/usr/local/bin/chromium-browser.zapmod-bak"
+
+setup_chrome_wrapper() {
+    # Descobre o binário real do Chrome/Chromium
+    local real_chrome=""
+    for bin in google-chrome google-chrome-stable chromium chromium-browser; do
+        local path
+        path=$(command -v "$bin" 2>/dev/null)
+        if [ -n "$path" ] && [ ! -L "$path" -o "$(readlink -f "$path")" != "/usr/local/bin/google-chrome" ]; then
+            real_chrome="$path"
+            break
+        fi
+    done
+
+    [ -z "$real_chrome" ] && return
+
+    local wrapper="/usr/local/bin/$(basename "$real_chrome")"
+
+    # Só cria wrapper se o binário real não for já um wrapper nosso
+    if [ -f "$real_chrome" ] && ! grep -q "zapmod" "$real_chrome" 2>/dev/null; then
+        cp "$real_chrome" "${real_chrome}.zapmod-bak" 2>/dev/null
+        cat > "$wrapper" << EOF
+#!/bin/bash
+exec "$real_chrome.zapmod-bak" --ignore-certificate-errors --ignore-ssl-errors "\$@"
+EOF
+        chmod +x "$wrapper"
+        echo -e "  ${GREEN}> Chrome configurado para aceitar certificado do proxy.${RESET}"
+    fi
+}
+
+cleanup_chrome_wrapper() {
+    for bin in google-chrome google-chrome-stable chromium chromium-browser; do
+        local bak
+        bak=$(command -v "${bin}.zapmod-bak" 2>/dev/null)
+        if [ -n "$bak" ]; then
+            local wrapper="${bak%.zapmod-bak}"
+            cp "$bak" "$wrapper" 2>/dev/null
+            rm -f "$bak"
+        fi
+    done
+}
+
 # ── Ativar ─────────────────────────────────────────────────────────
 
 do_activate() {
@@ -451,6 +499,7 @@ do_activate() {
 
     # 2. Certificados
     generate_certs
+    setup_chrome_wrapper
 
     # 3. Proxy
     generate_proxy_script
@@ -529,6 +578,7 @@ do_deactivate() {
     flush_dns
 
     remove_cert_system
+    cleanup_chrome_wrapper
     rm -rf "$CERT_DIR" "$PROXY_SCRIPT"
 
     show_success_box "ZAPMOD DESATIVADO COM SUCESSO!"
