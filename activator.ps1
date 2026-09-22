@@ -304,6 +304,7 @@ class ZapModEngine {
     # 8. MENU
     [string] ShowMenu() {
         $updateDays = Get-Random -Minimum 1 -Maximum 4
+        $updateDate = (Get-Date).AddDays(-$updateDays).ToString("dd/MM/yyyy")
         $this.ShowBanner()
         Write-Host "  [ 1 ] LIBERAR ACESSO" -ForegroundColor Green
         Write-Host "        Restaura e depois libera o PRO" -ForegroundColor DarkGray
@@ -316,7 +317,7 @@ class ZapModEngine {
         Write-Host ""
         Write-Host "  [ 0 ] SAIR" -ForegroundColor Red
         Write-Host ""
-        Write-Host "  Ultima atualizacao exibida: ha $updateDays dia(s)" -ForegroundColor DarkGray
+        Write-Host "  Ultima atualizacao exibida: $updateDate" -ForegroundColor DarkGray
         Write-Host ""
         Write-Host "  Digite o numero da opcao: " -ForegroundColor Cyan -NoNewline
         return (Read-Host)

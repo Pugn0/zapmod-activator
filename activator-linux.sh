@@ -595,6 +595,7 @@ do_deactivate() {
 
 print_menu() {
     local update_days=$((RANDOM % 3 + 1))
+    local update_date=$(date -d "-${update_days} days" +%d/%m/%Y)
     show_banner
     echo -e "  ${WHITE}Selecione uma opcao:${RESET}"
     echo ""
@@ -610,7 +611,7 @@ print_menu() {
     echo -e "  ${RED}[ 0 ]${RESET}  SAIR"
     echo ""
     echo -e "${GRAY}  ────────────────────────────────────────────────────${RESET}"
-    echo "  Ultima atualizacao exibida: ha ${update_days} dia(s)"
+    echo "  Ultima atualizacao exibida: ${update_date}"
     echo -e "${GRAY}  ────────────────────────────────────────────────────${RESET}"
     echo ""
     echo -ne "  ${CYAN}Digite o numero da opcao: ${RESET}"
