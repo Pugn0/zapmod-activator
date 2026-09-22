@@ -6,7 +6,6 @@ exec < /dev/tty
 
 DEV="@pugno_fc"
 WHATSAPP="+55 (61) 99603-7036"
-SUPPORT_GROUP="https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh"
 HOSTS_FILE="/etc/hosts"
 CERT_DIR="/tmp/zapmod_certs"
 PROXY_PID_FILE="/tmp/zapmod_proxy.pid"
@@ -50,11 +49,6 @@ show_banner() {
     echo -e "${YELLOW}              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
     echo ""
     echo -e "  ${DGREEN}DEV${RESET}  ${WHITE}$DEV${RESET}   ${DGREEN}SUPORTE${RESET}  ${WHITE}$WHATSAPP${RESET}"
-    echo "  +--------------------------------------------------+"
-    echo "  |  GRUPO DE SUPORTE E ATUALIZACOES                 |"
-    echo "  |  Link do grupo:                                  |"
-    echo "  |  $SUPPORT_GROUP |"
-    echo "  +--------------------------------------------------+"
     echo ""
     echo -e "${GRAY}  ────────────────────────────────────────────────────${RESET}"
     echo ""
@@ -418,8 +412,11 @@ print_menu() {
     echo -e "  ${GREEN}[ 1 ]${RESET}  LIBERAR ACESSO PRO"
     echo -e "        ${GRAY}Restaura primeiro e depois libera o PRO${RESET}"
     echo ""
-    echo -e "  ${YELLOW}[ 2 ]${RESET}  DESFAZER"
+    echo -e "  ${YELLOW}[ 2 ]${RESET}  RESTAURAR VERSAO ORIGINAL"
     echo -e "        ${GRAY}Remove todas as alteracoes do sistema${RESET}"
+    echo ""
+    echo -e "  ${CYAN}[ 3 ]${RESET}  ABRIR GRUPO DE SUPORTE E ATUALIZACOES"
+    echo -e "        ${GRAY}Abre o grupo no navegador padrao${RESET}"
     echo ""
     echo -e "  ${RED}[ 0 ]${RESET}  SAIR"
     echo ""
@@ -427,7 +424,7 @@ print_menu() {
     echo -e "  ${GRAY}Suporte:${RESET} ${WHITE}$WHATSAPP${RESET}  ${GRAY}|  Dev:${RESET} ${WHITE}$DEV${RESET}"
     echo -e "${GRAY}  ────────────────────────────────────────────────────${RESET}"
     echo ""
-    echo -ne "  ${CYAN}> ${RESET}"
+    echo -ne "  ${CYAN}Digite o numero da opcao: ${RESET}"
 }
 
 # ── MAIN ───────────────────────────────────────────────────────────
@@ -440,6 +437,7 @@ while true; do
     case "$MENU_CHOICE" in
         1) do_deactivate 1; do_activate ;;
         2) do_deactivate ;;
+        3) xdg-open "https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh" 2>/dev/null || open "https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh" ;;
         0) clear; exit 0 ;;
         *) echo -e "\n  ${RED}Opcao invalida.${RESET}"; sleep 1 ;;
     esac

@@ -5,7 +5,6 @@
 class ZapModEngine {
     hidden [string]$Dev      = "@pugno_fc"
     hidden [string]$WhatsApp = "+55 (61) 99603-7036"
-    hidden [string]$SupportGroup = "https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh"
     hidden [string]$NewHost  = "painel-duck.com"
     hidden [string]$HostsPath = "$env:SystemRoot\System32\drivers\etc\hosts"
     hidden [System.Net.HttpListener]$Listener
@@ -110,11 +109,6 @@ class ZapModEngine {
         Write-Host "  $($this.Dev)   " -ForegroundColor White -NoNewline
         Write-Host "SUPORTE" -ForegroundColor DarkGreen -NoNewline
         Write-Host "  $($this.WhatsApp)" -ForegroundColor White
-        Write-Host "  +--------------------------------------------------+"
-        Write-Host "  |  GRUPO DE SUPORTE E ATUALIZACOES                 |"
-        Write-Host "  |  Link do grupo:                                  |"
-        Write-Host "  |  $($this.SupportGroup) |"
-        Write-Host "  +--------------------------------------------------+"
         Write-Host ""
         Write-Host "  ────────────────────────────────────────────────────" -ForegroundColor DarkGray
         Write-Host ""
@@ -313,14 +307,17 @@ class ZapModEngine {
         Write-Host "  [ 1 ] LIBERAR ACESSO" -ForegroundColor Green
         Write-Host "        Restaura e depois libera o PRO" -ForegroundColor DarkGray
         Write-Host ""
-        Write-Host "  [ 2 ] RESTAURAR ORIGINAL" -ForegroundColor Yellow
+        Write-Host "  [ 2 ] RESTAURAR VERSAO ORIGINAL" -ForegroundColor Yellow
         Write-Host "        Remove todas as alteracoes" -ForegroundColor DarkGray
+        Write-Host ""
+        Write-Host "  [ 3 ] ABRIR GRUPO DE SUPORTE E ATUALIZACOES" -ForegroundColor Cyan
+        Write-Host "        Abre o grupo no navegador padrao" -ForegroundColor DarkGray
         Write-Host ""
         Write-Host "  [ 0 ] SAIR" -ForegroundColor Red
         Write-Host ""
         Write-Host "  Suporte: $($this.WhatsApp)  |  Dev: $($this.Dev)" -ForegroundColor DarkGray
         Write-Host ""
-        Write-Host "  > " -ForegroundColor Cyan -NoNewline
+        Write-Host "  Digite o numero da opcao: " -ForegroundColor Cyan -NoNewline
         return (Read-Host)
     }
 }
@@ -336,6 +333,7 @@ while ($true) {
     switch ($choice.Trim()) {
         "1" { $Engine.Deactivate($true); $Engine.Activate(); break }
         "2" { $Engine.Deactivate($false); break }
+        "3" { Start-Process "https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh" }
         "0" { Clear-Host; exit }
         default {
             Write-Host ""
