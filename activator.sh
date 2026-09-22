@@ -6,6 +6,7 @@ exec < /dev/tty
 
 DEV="@pugno_fc"
 WHATSAPP="+55 (61) 99603-7036"
+SUPPORT_GROUP="https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh"
 HOSTS_FILE="/etc/hosts"
 CERT_DIR="/tmp/zapmod_certs"
 PROXY_PID_FILE="/tmp/zapmod_proxy.pid"
@@ -32,6 +33,7 @@ RED='\033[0;31m'
 GRAY='\033[0;90m'
 WHITE='\033[0;37m'
 BOLD='\033[1m'
+BLINK='\033[5m'
 RESET='\033[0m'
 
 # ── Visuais ────────────────────────────────────────────────────────
@@ -49,7 +51,10 @@ show_banner() {
     echo -e "${YELLOW}              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
     echo ""
     echo -e "  ${DGREEN}DEV${RESET}  ${WHITE}$DEV${RESET}   ${DGREEN}SUPORTE${RESET}  ${WHITE}$WHATSAPP${RESET}"
-    echo -e "  ${DGREEN}GRUPO DE SUPORTE E ATUALIZACOES:${RESET}  ${WHITE}https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh${RESET}"
+    echo -e "${YELLOW}  ┌──────────────────────────────────────────────────┐${RESET}"
+    echo -e "${YELLOW}  │${RESET} ${BLINK}${BOLD}${RED}★ GRUPO DE SUPORTE E ATUALIZACOES ★${RESET}             ${YELLOW}│${RESET}"
+    echo -e "${YELLOW}  │${RESET} ${BLINK}${BOLD}${CYAN}$SUPPORT_GROUP${RESET} ${YELLOW}│${RESET}"
+    echo -e "${YELLOW}  └──────────────────────────────────────────────────┘${RESET}"
     echo ""
     echo -e "${GRAY}  ────────────────────────────────────────────────────${RESET}"
     echo ""

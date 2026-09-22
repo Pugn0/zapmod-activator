@@ -5,6 +5,7 @@
 class ZapModEngine {
     hidden [string]$Dev      = "@pugno_fc"
     hidden [string]$WhatsApp = "+55 (61) 99603-7036"
+    hidden [string]$SupportGroup = "https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh"
     hidden [string]$NewHost  = "painel-duck.com"
     hidden [string]$HostsPath = "$env:SystemRoot\System32\drivers\etc\hosts"
     hidden [System.Net.HttpListener]$Listener
@@ -109,7 +110,10 @@ class ZapModEngine {
         Write-Host "  $($this.Dev)   " -ForegroundColor White -NoNewline
         Write-Host "SUPORTE" -ForegroundColor DarkGreen -NoNewline
         Write-Host "  $($this.WhatsApp)" -ForegroundColor White
-        Write-Host "  GRUPO DE SUPORTE E ATUALIZACOES: https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh" -ForegroundColor White
+        Write-Host "  ┌──────────────────────────────────────────────────┐" -ForegroundColor Yellow
+        Write-Host ("{0}[5m  │  ★ GRUPO DE SUPORTE E ATUALIZACOES ★             │{0}[0m" -f [char]27)
+        Write-Host ("{0}[5m  │  {1} │{0}[0m" -f [char]27, $this.SupportGroup)
+        Write-Host "  └──────────────────────────────────────────────────┘" -ForegroundColor Yellow
         Write-Host ""
         Write-Host "  ────────────────────────────────────────────────────" -ForegroundColor DarkGray
         Write-Host ""
