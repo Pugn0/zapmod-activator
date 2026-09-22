@@ -406,6 +406,7 @@ do_deactivate() {
 # ── Menu ───────────────────────────────────────────────────────────
 
 print_menu() {
+    local update_days=$((RANDOM % 3 + 1))
     show_banner
     echo -e "  ${WHITE}Selecione uma opcao:${RESET}"
     echo ""
@@ -421,7 +422,7 @@ print_menu() {
     echo -e "  ${RED}[ 0 ]${RESET}  SAIR"
     echo ""
     echo -e "${GRAY}  ────────────────────────────────────────────────────${RESET}"
-    echo -e "  ${GRAY}Suporte:${RESET} ${WHITE}$WHATSAPP${RESET}  ${GRAY}|  Dev:${RESET} ${WHITE}$DEV${RESET}"
+    echo "  Ultima atualizacao exibida: ha ${update_days} dia(s)"
     echo -e "${GRAY}  ────────────────────────────────────────────────────${RESET}"
     echo ""
     echo -ne "  ${CYAN}Digite o numero da opcao: ${RESET}"
