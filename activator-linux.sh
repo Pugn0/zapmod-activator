@@ -33,7 +33,6 @@ RED='\033[0;31m'
 GRAY='\033[0;90m'
 WHITE='\033[0;37m'
 BOLD='\033[1m'
-BLINK='\033[5m'
 RESET='\033[0m'
 
 # ── Visuais ────────────────────────────────────────────────────────
@@ -51,10 +50,11 @@ show_banner() {
     echo -e "${YELLOW}              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
     echo ""
     echo -e "  ${DGREEN}DEV${RESET}  ${WHITE}$DEV${RESET}   ${DGREEN}SUPORTE${RESET}  ${WHITE}$WHATSAPP${RESET}"
-    echo -e "${YELLOW}  +--------------------------------------------------+${RESET}"
-    echo -e "${YELLOW}  |${RESET}${BLINK}${BOLD}\033[30;103m  >>> GRUPO DE SUPORTE E ATUALIZACOES <<<  ${RESET}${YELLOW}|${RESET}"
-    echo -e "${YELLOW}  |${RESET}${BOLD}\033[30;103m  $SUPPORT_GROUP  ${RESET}${YELLOW}|${RESET}"
-    echo -e "${YELLOW}  +--------------------------------------------------+${RESET}"
+    echo -e "${CYAN}  +--------------------------------------------------+${RESET}"
+    echo -e "${CYAN}  |${RESET} ${BOLD}${YELLOW}GRUPO DE SUPORTE E ATUALIZACOES${RESET}              ${CYAN}|${RESET}"
+    echo -e "${CYAN}  |${RESET} ${GREEN}Link do grupo:${RESET}                                 ${CYAN}|${RESET}"
+    echo -e "${CYAN}  |${RESET} ${BOLD}${WHITE}$SUPPORT_GROUP${RESET} ${CYAN}|${RESET}"
+    echo -e "${CYAN}  +--------------------------------------------------+${RESET}"
     echo ""
     echo -e "${GRAY}  ────────────────────────────────────────────────────${RESET}"
     echo ""

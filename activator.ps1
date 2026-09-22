@@ -110,10 +110,11 @@ class ZapModEngine {
         Write-Host "  $($this.Dev)   " -ForegroundColor White -NoNewline
         Write-Host "SUPORTE" -ForegroundColor DarkGreen -NoNewline
         Write-Host "  $($this.WhatsApp)" -ForegroundColor White
-        Write-Host "  +--------------------------------------------------+" -ForegroundColor Yellow
-        Write-Host "  |  >>> GRUPO DE SUPORTE E ATUALIZACOES <<<        |" -ForegroundColor Black -BackgroundColor Yellow
-        Write-Host "  |  $($this.SupportGroup)  |" -ForegroundColor Black -BackgroundColor Yellow
-        Write-Host "  +--------------------------------------------------+" -ForegroundColor Yellow
+        Write-Host "  +--------------------------------------------------+" -ForegroundColor Cyan
+        Write-Host "  |  GRUPO DE SUPORTE E ATUALIZACOES                 |" -ForegroundColor Yellow
+        Write-Host "  |  Link do grupo:                                  |" -ForegroundColor Green
+        Write-Host "  |  $($this.SupportGroup) |" -ForegroundColor White
+        Write-Host "  +--------------------------------------------------+" -ForegroundColor Cyan
         Write-Host ""
         Write-Host "  ────────────────────────────────────────────────────" -ForegroundColor DarkGray
         Write-Host ""
