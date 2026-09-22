@@ -109,6 +109,7 @@ class ZapModEngine {
         Write-Host "  $($this.Dev)   " -ForegroundColor White -NoNewline
         Write-Host "SUPORTE" -ForegroundColor DarkGreen -NoNewline
         Write-Host "  $($this.WhatsApp)" -ForegroundColor White
+        Write-Host "  GRUPO DE SUPORTE E ATUALIZACOES: https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh" -ForegroundColor White
         Write-Host ""
         Write-Host "  ────────────────────────────────────────────────────" -ForegroundColor DarkGray
         Write-Host ""

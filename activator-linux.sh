@@ -49,6 +49,7 @@ show_banner() {
     echo -e "${YELLOW}              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
     echo ""
     echo -e "  ${DGREEN}DEV${RESET}  ${WHITE}$DEV${RESET}   ${DGREEN}SUPORTE${RESET}  ${WHITE}$WHATSAPP${RESET}"
+    echo -e "  ${DGREEN}GRUPO DE SUPORTE E ATUALIZACOES:${RESET}  ${WHITE}https://chat.whatsapp.com/Kvovg52eSpKFtZrOhh6oeh${RESET}"
     echo ""
     echo -e "${GRAY}  ────────────────────────────────────────────────────${RESET}"
     echo ""
