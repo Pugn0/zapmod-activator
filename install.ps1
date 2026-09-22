@@ -1,5 +1,5 @@
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
-    Start-Process PowerShell -Verb RunAs -ArgumentList "-ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Pugn0/zapmod-activator/main/activator.ps1?v=7cb1480 | iex`""
+    Start-Process PowerShell -Verb RunAs -ArgumentList "-ExecutionPolicy Bypass -Command `"irm https://raw.githubusercontent.com/Pugn0/zapmod-activator/main/activator.ps1?v=413f668 | iex`""
     exit
 }
-irm https://raw.githubusercontent.com/Pugn0/zapmod-activator/main/activator.ps1?v=7cb1480 | iex
+irm https://raw.githubusercontent.com/Pugn0/zapmod-activator/main/activator.ps1?v=413f668 | iex
